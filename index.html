@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Proposals | Alvaro Ibor</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font: 100%/1.55 system-ui, sans-serif;
+      color: #182438;
+      background: #eef3f8;
+    }
+    body { margin: 0; }
+    main { max-width: 48rem; margin: auto; padding: clamp(1rem, 5vw, 3rem); }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { margin: .25rem 0 1.5rem; font-size: clamp(1.8rem, 5vw, 2.6rem); }
+    h2 { margin: .35rem 0 .75rem; font-size: clamp(1.5rem, 4vw, 2rem); }
+    h3 { margin: 1.5rem 0 .5rem; font-size: 1.1rem; }
+    p { margin: 0 0 .75rem; }
+    .eyebrow { color: #344d70; font-size: .85rem; font-weight: 700; }
+    .summary { font-size: 1.08rem; }
+    .proposal {
+      background: white;
+      border: 1px solid #c5d1df;
+      border-radius: .85rem;
+      padding: clamp(1rem, 5vw, 2.5rem);
+    }
+    .proposal + .proposal { margin-top: 1rem; }
+    ul { padding-inline-start: 1.35rem; margin: 0; }
+    li + li { margin-top: .45rem; }
+    .tabs:not([hidden]) { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+    button {
+      font: inherit;
+      font-weight: 650;
+      text-align: start;
+      color: inherit;
+      background: white;
+      border: 1px solid #526782;
+      border-radius: .5rem;
+      min-height: 44px;
+      padding: .5rem .8rem;
+      cursor: pointer;
+    }
+    button[aria-selected="true"] { color: white; background: #173e72; border-color: #173e72; }
+    :focus-visible { outline: 3px solid #2165b1; outline-offset: 3px; }
+    @page { size: A4; margin: 17mm; }
+    @media print {
+      :root { color: black; background: white; font-size: 11pt; }
+      main { max-width: none; padding: 0; }
+      .tabs:not([hidden]) { display: none; }
+      .proposal, .proposal[hidden] {
+        display: block;
+        border: 0;
+        padding: 0;
+      }
+      .proposal + .proposal { break-before: page; margin-top: 0; }
+      h2, h3 { break-after: avoid; }
+      li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Alvaro Ibor · HTML/CSS/JavaScript Assignment</p>
+      <h1>Project Proposals</h1>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Project proposals" hidden>
+      <button type="button" role="tab" id="portfolio-tab" aria-controls="portfolio">Personal Investment Portfolio Tracker</button>
+      <button type="button" role="tab" id="jobs-tab" aria-controls="jobs">Job Application Tracker</button>
+    </div>
+
+    <article class="proposal" id="portfolio" aria-labelledby="portfolio-title">
+      <p class="eyebrow">Proposal 1</p>
+      <h2 id="portfolio-title">Personal Investment Portfolio Tracker</h2>
+      <p class="summary">A web application that helps individual investors track their stock portfolios, monitor performance, and organize their investments in one place.</p>
+      <h3>Problem and target audience</h3>
+      <p>Many individual investors use spreadsheets or multiple applications to track their investments. This makes it difficult to see their overall portfolio performance and keep an organized record of their transactions. This project targets beginner and intermediate investors who want a simple way to manage and understand their stock portfolios.</p>
+      <h3>Core MVP features</h3>
+      <ul>
+        <li><strong>Portfolio Dashboard:</strong> Overview of total invested capital, portfolio value, and profit or loss.</li>
+        <li><strong>Stock Management:</strong> Add, edit, and remove stocks from the portfolio.</li>
+        <li><strong>Transaction History:</strong> Record purchases and sales, including dates, prices, and quantities.</li>
+        <li><strong>Performance Tracking:</strong> Calculate the return of each investment and the overall portfolio.</li>
+        <li><strong>Portfolio Allocation:</strong> Visualize how investments are distributed across companies.</li>
+        <li><strong>Watchlist:</strong> Create a list of companies to follow before investing.</li>
+        <li><strong>Local Storage:</strong> Save portfolio information in the browser so it remains available between sessions.</li>
+      </ul>
+    </article>
+
+    <article class="proposal" id="jobs" aria-labelledby="jobs-title">
+      <p class="eyebrow">Proposal 2</p>
+      <h2 id="jobs-title">Job Application Tracker</h2>
+      <p class="summary">A web application that helps students and recent graduates organize job applications, track their progress, and manage recruitment deadlines.</p>
+      <h3>Problem and target audience</h3>
+      <p>Students and recent graduates often apply to multiple internships, graduate programmes, and entry-level positions simultaneously. Keeping track of deadlines, application statuses, and recruitment stages can become confusing. This project helps job seekers manage their applications efficiently and avoid missing important opportunities.</p>
+      <h3>Core MVP features</h3>
+      <ul>
+        <li><strong>Application Dashboard:</strong> Overview of applications and their current statuses.</li>
+        <li><strong>Add Applications:</strong> Register companies, job titles, locations, and application links.</li>
+        <li><strong>Status Tracking:</strong> Update applications through stages such as Saved, Applied, Interview, Offer, and Rejected.</li>
+        <li><strong>Deadline Management:</strong> Record and highlight approaching application deadlines.</li>
+        <li><strong>Search and Filters:</strong> Find applications by company, position, location, or status.</li>
+        <li><strong>Application Details:</strong> Store notes about interviews, requirements, and next steps.</li>
+        <li><strong>Local Storage:</strong> Save application information directly in the browser.</li>
+      </ul>
+    </article>
+  </main>
+
+  <script>
+    const tabList = document.querySelector('.tabs');
+    const tabs = [...tabList.querySelectorAll('[role="tab"]')];
+    const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+
+    function selectTab(index, moveFocus = false) {
+      tabs.forEach((tab, position) => {
+        const selected = position === index;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        panels[position].hidden = !selected;
+      });
+      if (moveFocus) tabs[index].focus();
+    }
+
+    tabs.forEach((tab, index) => {
+      const panel = panels[index];
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', tab.id);
+      panel.tabIndex = 0;
+      tab.addEventListener('click', () => selectTab(index));
+      tab.addEventListener('keydown', event => {
+        let next;
+        switch (event.key) {
+          case 'ArrowLeft': next = (index - 1 + tabs.length) % tabs.length; break;
+          case 'ArrowRight': next = (index + 1) % tabs.length; break;
+          case 'Home': next = 0; break;
+          case 'End': next = tabs.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        selectTab(next, true);
+      });
+    });
+
+    selectTab(0);
+    tabList.hidden = false;
+  </script>
+</body>
+</html>
+
+
